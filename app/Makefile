@@ -7,4 +7,4 @@ build:
 	gradle test
 	gradle checkstyleMain
 report:
-	./gradlew jacocoTestReport
+	@./gradlew jacocoTestReport
