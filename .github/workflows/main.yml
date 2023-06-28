@@ -16,7 +16,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build with Gradle
-        run: make build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+          build-root-directory: app
       - name: Code coverage
         uses: paambaati/codeclimate-action@v3.2.0
         env:
