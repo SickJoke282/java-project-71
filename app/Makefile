@@ -6,3 +6,5 @@ build:
 	gradle installDist
 	gradle test
 	gradle checkstyleMain
+report:
+	./gradlew jacocoTestReport
