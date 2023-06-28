@@ -21,7 +21,11 @@ public class Differ {
                     container2.remove(entryOfContainer1.getKey());
                 } else {
                     result += " - " + entryOfContainer1.getKey() + ": " + entryOfContainer1.getValue() + "\n";
-                    result += " + " + entryOfContainer1.getKey() + ": " + container2.get(entryOfContainer1.getKey()) + "\n";
+                    result += " + "
+                            + entryOfContainer1.getKey()
+                            + ": "
+                            + container2.get(entryOfContainer1.getKey())
+                            + "\n";
                     container2.remove(entryOfContainer1.getKey());
                 }
             } else {

@@ -6,12 +6,11 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "checksum 4.7.4",
         description = "Compares two configuration files and shows a difference.")
-class App implements Callable<Integer>{
+class App implements Callable<Integer> {
     @Parameters(index = "0", paramLabel = "filepath1", description = "path to the first file")
     private File file1;
 
