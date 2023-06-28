@@ -16,10 +16,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: build
-          build-root-directory: app
+        uses: make build
+      - name: Code coverage
         uses: paambaati/codeclimate-action@v3.2.0
         env:
           CC_TEST_REPORTER_ID: fd145a9b459240614b25606786950d0218fac3cb5fe304010120bbc9da55cea5
