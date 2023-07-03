@@ -1,31 +1,53 @@
 package hexlet.code;
 
+import com.google.common.collect.Multimap;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Stylish {
-    public static String generate(Map<String, Object> container1, Map<String, Object> container2) {
+public class Formatter {
+    public static String stylishGenerate(Multimap<String, Map.Entry<String, Object>> answer) {
         String result = "{\n";
-        for (Map.Entry<String, Object> entryOfContainer1: container1.entrySet()) {
-            if (container2.containsKey(entryOfContainer1.getKey())) {
-                System.out.println(entryOfContainer1.getValue());
-                if (container2.get(entryOfContainer1.getKey()).equals(entryOfContainer1.getValue())) {
-                    result += "   " + entryOfContainer1.getKey() + ": " + entryOfContainer1.getValue() + "\n";
-                    container2.remove(entryOfContainer1.getKey());
-                } else {
-                    result += " - " + entryOfContainer1.getKey() + ": " + entryOfContainer1.getValue() + "\n";
-                    result += " + " + entryOfContainer1.getKey()
-                            + ": " + container2.get(entryOfContainer1.getKey())
-                            + "\n";
-                    container2.remove(entryOfContainer1.getKey());
-                }
+        for (Map.Entry<String, Map.Entry<String, Object>> ans: answer.entries()) {
+            result = result.concat(ans.getKey() + ans.getValue().getKey() + ": " +  ans.getValue().getValue() + "\n");
+        }
+        result = result.concat("}");
+        return result;
+    }
+    public static String plainGenerate(Multimap<String, Map.Entry<String, Object>> answer) {
+        String result = "";
+        Map<String, Integer> repeatingKeys = new LinkedHashMap<>();
+        int count = 1;
+        for (Map.Entry<String, Map.Entry<String, Object>> ans: answer.entries()) {
+            if (repeatingKeys.containsKey(ans.getValue().getKey())) {
+                int temp = count + 1;
+                repeatingKeys.put(ans.getValue().getKey(), temp);
+                continue;
+            }
+            repeatingKeys.put(ans.getValue().getKey(), count);
+        }
+        for (Map.Entry<String, Map.Entry<String, Object>> ans: answer.entries()) {
+            Object temp = (ans.getValue().getValue().getClass() == LinkedHashMap.class
+                    || ans.getValue().getValue().getClass() == ArrayList.class)
+                    ? "[complex value]" : ans.getValue().getValue();
+            if (ans.getKey().equals("    ")) {
+                continue;
+            }
+            if (ans.getKey().equals("  - ") && repeatingKeys.get(ans.getValue().getKey()) == 1) {
+                result = result.concat("Property '" + ans.getValue().getKey() + "' was removed\n");
+            } else if (ans.getKey().equals("  + ") && repeatingKeys.get(ans.getValue().getKey()) == 1) {
+                result = result.concat("Property '" + ans.getValue().getKey() + "' was added with value: "
+                        + temp + "\n");
             } else {
-                result += " - " + entryOfContainer1.getKey() + ": " + entryOfContainer1.getValue() + "\n";
+                if (ans.getKey().equals("  - ")) {
+                    result = result.concat("Property '" + ans.getValue().getKey() + "' was updated. From "
+                            + temp + " to ");
+                    continue;
+                }
+                result = result.concat(temp + "\n");
             }
         }
-        for (Map.Entry<String, Object> entryOfContainer2: container2.entrySet()) {
-            result += " + " + entryOfContainer2.getKey() + ": " + entryOfContainer2.getValue() + "\n";
-        }
-        result += "}";
         return result;
     }
 }
