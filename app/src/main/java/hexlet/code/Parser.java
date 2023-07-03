@@ -20,6 +20,24 @@ public class Parser {
             parsedFiles[0] = ymlObjectMapper.readValue(file1, HashMap.class);
             parsedFiles[1] = ymlObjectMapper.readValue(file2, HashMap.class);
         }
+        parsedFiles[0].entrySet().forEach(x -> {
+            if (x.getValue() == null) {
+                x.setValue("null");
+            }
+        });
+        return changeNulls(parsedFiles);
+    }
+    public static Map<String, Object>[] changeNulls(Map<String, Object>[] parsedFiles) {
+        parsedFiles[0].entrySet().forEach(x -> {
+            if (x.getValue() == null) {
+                x.setValue("null");
+            }
+        });
+        parsedFiles[1].entrySet().forEach(x -> {
+            if (x.getValue() == null) {
+                x.setValue("null");
+            }
+        });
         return parsedFiles;
     }
 }
