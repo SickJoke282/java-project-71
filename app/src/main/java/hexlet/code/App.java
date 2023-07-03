@@ -17,12 +17,13 @@ class App implements Callable<Integer> {
     @Parameters(index = "1", paramLabel = "filepath2", description = "path to the second file")
     private File file2;
 
-    @Option(names = {"-f", "--format"}, paramLabel = "format", description = "output format [default: stylish]")
-    private String format = "stylish";
+    @Option(names = {"-f", "--format"}, paramLabel = "format",
+            defaultValue = "stylish", description = "output format ${DEFAULT-VALUE}")
+    private String formatter;
 
     @Override
     public Integer call() throws Exception {
-        String diff = Differ.generate(file1, file2);
+        String diff = Differ.generate(file1, file2, formatter);
         System.out.println(diff);
         return 0;
     }
