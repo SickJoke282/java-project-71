@@ -7,3 +7,5 @@
 [![asciicast](https://asciinema.org/a/6WVRQmb8pkw9YqqSLBYLFI9So.svg)](https://asciinema.org/a/6WVRQmb8pkw9YqqSLBYLFI9So)
 ### Comparison between two flat yml files:
 [![asciicast](https://asciinema.org/a/HdY131Q6ueSCzGRbx8yMXGnVR.svg)](https://asciinema.org/a/HdY131Q6ueSCzGRbx8yMXGnVR)
+### Add a format option and support of nested json and yaml file:
+[![asciicast](https://asciinema.org/a/AJfP43EZYKrN0DV9i6mr6LBVz.svg)](https://asciinema.org/a/AJfP43EZYKrN0DV9i6mr6LBVz)
