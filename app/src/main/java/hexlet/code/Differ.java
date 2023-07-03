@@ -1,19 +1,16 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 
 public class Differ {
     public static String generate(File file1, File file2) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
         String result = "{\n";
-        Map<String, Object> container1 = objectMapper.readValue(file1, HashMap.class);
-        Map<String, Object> container2 = objectMapper.readValue(file2, HashMap.class);
+        Map<String, Object>[] parsedFiles = Parser.parse(file1, file2);
+        Map<String, Object> container1 = parsedFiles[0];
+        Map<String, Object> container2 = parsedFiles[1];
         for (Map.Entry<String, Object> entryOfContainer1: container1.entrySet()) {
             if (container2.containsKey(entryOfContainer1.getKey())) {
                 if (container2.get(entryOfContainer1.getKey()).equals(entryOfContainer1.getValue())) {
