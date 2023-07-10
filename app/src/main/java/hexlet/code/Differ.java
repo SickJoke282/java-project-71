@@ -13,10 +13,11 @@ public class Differ {
         Map<String, Object>[] parsedFiles = Parser.parse(file1, file2);
         Map<String, Object> container1 = parsedFiles[0];
         Map<String, Object> container2 = parsedFiles[1];
-        Multimap<String, Map.Entry<String, Object>> answer = trackChangesOfFiles(container1, container2);
+        Multimap<String, Map.Entry<String, Object>> mapWithChanges = trackChangesOfFiles(container1, container2);
         return switch (formatter) {
-            case "stylish" -> Formatter.stylishGenerate(answer);
-            case "plain" -> Formatter.plainGenerate(answer);
+            case "stylish" -> Formatter.stylishGenerate(mapWithChanges);
+            case "plain" -> Formatter.plainGenerate(mapWithChanges);
+            case "json" -> Formatter.jsonGenerate(mapWithChanges);
             default -> null;
         };
     }
