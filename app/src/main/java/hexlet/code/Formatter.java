@@ -1,53 +1,51 @@
 package hexlet.code;
 
-import com.google.common.collect.Multimap;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Formatter {
-    public static Map<String, Integer> findRepeatingKeys(Multimap<String, Map.Entry<String, Object>> multimap) {
+    public static Map<String, Integer> findRepeatingKeys(Map<Map.Entry<String, Object>, String> multimap) {
         Map<String, Integer> repeatingKeys = new LinkedHashMap<>();
         int count = 1;
-        for (Map.Entry<String, Map.Entry<String, Object>> entriesOfMap: multimap.entries()) {
-            if (repeatingKeys.containsKey(entriesOfMap.getValue().getKey())) {
+        for (Map.Entry<Map.Entry<String, Object>, String> entriesOfMap: multimap.entrySet()) {
+            if (repeatingKeys.containsKey(entriesOfMap.getKey().getKey())) {
                 int temp = count + 1;
-                repeatingKeys.put(entriesOfMap.getValue().getKey(), temp);
+                repeatingKeys.put(entriesOfMap.getKey().getKey(), temp);
                 continue;
             }
-            repeatingKeys.put(entriesOfMap.getValue().getKey(), count);
+            repeatingKeys.put(entriesOfMap.getKey().getKey(), count);
         }
         return repeatingKeys;
     }
-    public static String stylishGenerate(Multimap<String, Map.Entry<String, Object>> multimap) {
+    public static String stylishGenerate(Map<Map.Entry<String, Object>, String> multimap) {
         String result = "{\n";
-        for (Map.Entry<String, Map.Entry<String, Object>> entriesOfMap: multimap.entries()) {
-            result = result.concat(entriesOfMap.getKey() + entriesOfMap.getValue().getKey()
-                    + ": " +  entriesOfMap.getValue().getValue() + "\n");
+        for (Map.Entry<Map.Entry<String, Object>, String> entriesOfMap: multimap.entrySet()) {
+            result = result.concat(entriesOfMap.getValue() + entriesOfMap.getKey().getKey()
+                    + ": " +  entriesOfMap.getKey().getValue() + "\n");
         }
         result = result.concat("}");
         return result;
     }
-    public static String plainGenerate(Multimap<String, Map.Entry<String, Object>> multimap) {
+    public static String plainGenerate(Map<Map.Entry<String, Object>, String> multimap) {
         String result = "";
         Map<String, Integer> repeatingKeys = findRepeatingKeys(multimap);
-        for (Map.Entry<String, Map.Entry<String, Object>> entriesOfMap: multimap.entries()) {
-            Object temp = (entriesOfMap.getValue().getValue().getClass() == LinkedHashMap.class
-                    || entriesOfMap.getValue().getValue().getClass() == ArrayList.class)
-                    ? "[complex value]" : entriesOfMap.getValue().getValue();
-            if (entriesOfMap.getKey().equals("    ")) {
+        for (Map.Entry<Map.Entry<String, Object>, String> entriesOfMap: multimap.entrySet()) {
+            Object temp = (entriesOfMap.getKey().getValue().getClass() == LinkedHashMap.class
+                    || entriesOfMap.getKey().getValue().getClass() == ArrayList.class)
+                    ? "[complex value]" : entriesOfMap.getKey().getValue();
+            if (entriesOfMap.getValue().equals("    ")) {
                 continue;
             }
-            if (entriesOfMap.getKey().equals("  - ") && repeatingKeys.get(entriesOfMap.getValue().getKey()) == 1) {
-                result = result.concat("Property '" + entriesOfMap.getValue().getKey() + "' was removed\n");
-            } else if (entriesOfMap.getKey().equals("  + ")
-                    && repeatingKeys.get(entriesOfMap.getValue().getKey()) == 1) {
-                result = result.concat("Property '" + entriesOfMap.getValue().getKey() + "' was added with value: "
+            if (entriesOfMap.getValue().equals("  - ") && repeatingKeys.get(entriesOfMap.getKey().getKey()) == 1) {
+                result = result.concat("Property '" + entriesOfMap.getKey().getKey() + "' was removed\n");
+            } else if (entriesOfMap.getValue().equals("  + ")
+                    && repeatingKeys.get(entriesOfMap.getKey().getKey()) == 1) {
+                result = result.concat("Property '" + entriesOfMap.getKey().getKey() + "' was added with value: "
                         + temp + "\n");
             } else {
-                if (entriesOfMap.getKey().equals("  - ")) {
-                    result = result.concat("Property '" + entriesOfMap.getValue().getKey() + "' was updated. From "
+                if (entriesOfMap.getValue().equals("  - ")) {
+                    result = result.concat("Property '" + entriesOfMap.getKey().getKey() + "' was updated. From "
                             + temp + " to ");
                     continue;
                 }
@@ -56,37 +54,37 @@ public class Formatter {
         }
         return result;
     }
-    public static String jsonGenerate(Multimap<String, Map.Entry<String, Object>> multimap) {
+    public static String jsonGenerate(Map<Map.Entry<String, Object>, String> multimap) {
         String result = "{\n  Removed: {\n";
         Map<String, Integer> repeatingKeys = findRepeatingKeys(multimap);
-        for (Map.Entry<String, Map.Entry<String, Object>> entriesOfMap: multimap.entries()) {
-            if (entriesOfMap.getKey().equals("  - ") && repeatingKeys.get(entriesOfMap.getValue().getKey()) == 1) {
-                result = result.concat("    " + entriesOfMap.getValue().getKey()
-                        + ": " + entriesOfMap.getValue().getValue() + "\n");
+        for (Map.Entry<Map.Entry<String, Object>, String> entriesOfMap: multimap.entrySet()) {
+            if (entriesOfMap.getValue().equals("  - ") && repeatingKeys.get(entriesOfMap.getKey().getKey()) == 1) {
+                result = result.concat("    " + entriesOfMap.getKey().getKey()
+                        + ": " + entriesOfMap.getKey().getValue() + "\n");
             }
         }
         result = result.concat("  }\n  Added: {\n");
-        for (Map.Entry<String, Map.Entry<String, Object>> entriesOfMap: multimap.entries()) {
-            if (entriesOfMap.getKey().equals("  + ") && repeatingKeys.get(entriesOfMap.getValue().getKey()) == 1) {
-                result = result.concat("    " + entriesOfMap.getValue().getKey()
-                        + ": " + entriesOfMap.getValue().getValue() + "\n");
+        for (Map.Entry<Map.Entry<String, Object>, String> entriesOfMap: multimap.entrySet()) {
+            if (entriesOfMap.getValue().equals("  + ") && repeatingKeys.get(entriesOfMap.getKey().getKey()) == 1) {
+                result = result.concat("    " + entriesOfMap.getKey().getKey()
+                        + ": " + entriesOfMap.getKey().getValue() + "\n");
             }
         }
         result = result.concat("  }\n  Unchanged: {\n");
-        for (Map.Entry<String, Map.Entry<String, Object>> entriesOfMap: multimap.entries()) {
-            if (entriesOfMap.getKey().equals("    ")) {
-                result = result.concat("    " + entriesOfMap.getValue().getKey()
-                        + ": " + entriesOfMap.getValue().getValue() + "\n");
+        for (Map.Entry<Map.Entry<String, Object>, String> entriesOfMap: multimap.entrySet()) {
+            if (entriesOfMap.getValue().equals("    ")) {
+                result = result.concat("    " + entriesOfMap.getKey().getKey()
+                        + ": " + entriesOfMap.getKey().getValue() + "\n");
             }
         }
         result = result.concat("  }\n  Updated: {\n");
-        for (Map.Entry<String, Map.Entry<String, Object>> entriesOfMap: multimap.entries()) {
-            if (entriesOfMap.getKey().equals("  - ") && repeatingKeys.get(entriesOfMap.getValue().getKey()) != 1) {
-                result = result.concat("    " + entriesOfMap.getValue().getKey() + ": {\n      from: "
-                        + entriesOfMap.getValue().getValue() + "\n      to: ");
-            } else if (entriesOfMap.getKey().equals("  + ")
-                    && repeatingKeys.get(entriesOfMap.getValue().getKey()) != 1) {
-                result = result.concat(entriesOfMap.getValue().getValue() + "\n    }\n");
+        for (Map.Entry<Map.Entry<String, Object>, String> entriesOfMap: multimap.entrySet()) {
+            if (entriesOfMap.getValue().equals("  - ") && repeatingKeys.get(entriesOfMap.getKey().getKey()) != 1) {
+                result = result.concat("    " + entriesOfMap.getKey().getKey() + ": {\n      from: "
+                        + entriesOfMap.getKey().getValue() + "\n      to: ");
+            } else if (entriesOfMap.getValue().equals("  + ")
+                    && repeatingKeys.get(entriesOfMap.getKey().getKey()) != 1) {
+                result = result.concat(entriesOfMap.getKey().getValue() + "\n    }\n");
             }
         }
         result += "  }\n}";

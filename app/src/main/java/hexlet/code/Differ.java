@@ -1,11 +1,9 @@
 package hexlet.code;
 
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
-
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Differ {
@@ -16,7 +14,7 @@ public class Differ {
         Map<String, Object>[] parsedFiles = Parser.parse(Path.of(file1).toFile(), Path.of(file2).toFile());
         Map<String, Object> container1 = parsedFiles[0];
         Map<String, Object> container2 = parsedFiles[1];
-        Multimap<String, Map.Entry<String, Object>> mapWithChanges = trackChangesOfFiles(container1, container2);
+        Map<Map.Entry<String, Object>, String> mapWithChanges = trackChangesOfFiles(container1, container2);
         return switch (formatter) {
             case "stylish" -> Formatter.stylishGenerate(mapWithChanges);
             case "plain" -> Formatter.plainGenerate(mapWithChanges);
@@ -24,28 +22,30 @@ public class Differ {
             default -> null;
         };
     }
-    public static Multimap<String, Map.Entry<String, Object>> trackChangesOfFiles(Map<String,
+    public static Map<Map.Entry<String, Object>, String> trackChangesOfFiles(Map<String,
             Object> container1, Map<String, Object> container2) {
-        Multimap<String, Map.Entry<String, Object>> answer = LinkedHashMultimap.create();
+        Map<Map.Entry<String, Object>, String> answer = new LinkedHashMap<>();
         for (Map.Entry<String, Object> entryOfContainer1: container1.entrySet()) {
             if (container2.containsKey(entryOfContainer1.getKey())) {
                 if (container2.get(entryOfContainer1.getKey()).equals(entryOfContainer1.getValue())) {
-                    answer.put("    ", Map.entry(entryOfContainer1.getKey(), entryOfContainer1.getValue()));
+                    answer.put(Map.entry(entryOfContainer1.getKey(), entryOfContainer1.getValue()), "    ");
                     container2.remove(entryOfContainer1.getKey());
                 } else {
-                    answer.put("  - ",
-                            Map.entry(entryOfContainer1.getKey(), entryOfContainer1.getValue()));
-                    answer.put("  + ",
-                            Map.entry(entryOfContainer1.getKey(), container2.get(entryOfContainer1.getKey())));
+                    answer.put(Map.entry(entryOfContainer1.getKey(), entryOfContainer1.getValue()),
+                            "  - ");
+                    answer.put(Map.entry(entryOfContainer1.getKey(), container2.get(entryOfContainer1.getKey())),
+                            "  + ");
                     container2.remove(entryOfContainer1.getKey());
                 }
             } else {
-                answer.put("  - ", Map.entry(entryOfContainer1.getKey(), entryOfContainer1.getValue()));
+                answer.put(Map.entry(entryOfContainer1.getKey(), entryOfContainer1.getValue()), "  - ");
             }
         }
         for (Map.Entry<String, Object> entryOfContainer2: container2.entrySet()) {
-            answer.put("  + ", Map.entry(entryOfContainer2.getKey(), entryOfContainer2.getValue()));
+            answer.put(Map.entry(entryOfContainer2.getKey(), entryOfContainer2.getValue()), "  + ");
         }
-        return answer;
+        return answer.entrySet().stream()
+                .sorted(Comparator.comparing(e -> e.getKey().getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 }
