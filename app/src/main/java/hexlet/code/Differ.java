@@ -9,6 +9,9 @@ import java.util.Map;
 
 
 public class Differ {
+    public static String generate(File file1, File file2) throws IOException {
+        return generate(file1, file2, "stylish");
+    }
     public static String generate(File file1, File file2, String formatter) throws IOException {
         Map<String, Object>[] parsedFiles = Parser.parse(file1, file2);
         Map<String, Object> container1 = parsedFiles[0];
