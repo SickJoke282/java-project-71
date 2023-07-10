@@ -2,15 +2,13 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DifferPlainTest {
     @Test
     void jsonTestTake() throws Exception {
-        File file1 = new File("./src/test/resources/file1.json");
-        File file2 = new File("./src/test/resources/file2.json");
+        String file1 = "./src/test/resources/file1.json";
+        String file2 = "./src/test/resources/file2.json";
         String[] expected = {
             "Property 'chars2' was updated. From [complex value] to false",
             "Property 'checked' was updated. From false to true",
@@ -29,8 +27,8 @@ class DifferPlainTest {
     }
     @Test
     void ymlTestTake() throws Exception {
-        File file1 = new File("./src/test/resources/file5.yml");
-        File file2 = new File("./src/test/resources/file6.yml");
+        String file1 = "./src/test/resources/file5.yml";
+        String file2 = "./src/test/resources/file6.yml";
         String[] expected = {
             "Property 'chars2' was updated. From [complex value] to false",
             "Property 'checked' was updated. From false to true",

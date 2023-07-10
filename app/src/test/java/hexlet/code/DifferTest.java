@@ -2,16 +2,14 @@ package hexlet.code;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.File;
-
 import org.junit.jupiter.api.Test;
 
 class DifferTest {
 
     @Test
     void jsonTestTake() throws Exception {
-        File file1 = new File("./src/test/resources/file1.json");
-        File file2 = new File("./src/test/resources/file2.json");
+        String file1 = "./src/test/resources/file1.json";
+        String file2 = "./src/test/resources/file2.json";
         String[] expected = {
             "{",
             "chars1: [a, b, c]",
@@ -44,8 +42,8 @@ class DifferTest {
 
     @Test
     void jsonTestTake2() throws Exception {
-        File file1 = new File("./src/test/resources/file3.json");
-        File file2 = new File("./src/test/resources/file4.json");
+        String file1 = "./src/test/resources/file3.json";
+        String file2 = "./src/test/resources/file4.json";
         String[] expected = {
             "{",
             "- gender: female",
@@ -78,8 +76,8 @@ class DifferTest {
     }
     @Test
     void ymlTestTake() throws Exception {
-        File file1 = new File("./src/test/resources/file5.yml");
-        File file2 = new File("./src/test/resources/file6.yml");
+        String file1 = "./src/test/resources/file5.yml";
+        String file2 = "./src/test/resources/file6.yml";
         String[] expected = {
             "{",
             "chars1: [a, b, c]",
@@ -111,8 +109,8 @@ class DifferTest {
     }
     @Test
     void ymlTestTake2() throws Exception {
-        File file1 = new File("./src/test/resources/file7.yml");
-        File file2 = new File("./src/test/resources/file8.yml");
+        String file1 = "./src/test/resources/file7.yml";
+        String file2 = "./src/test/resources/file8.yml";
         String[] expected = {
             "{",
             "- gender: female",

@@ -2,15 +2,13 @@ package hexlet.code;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.File;
-
 import org.junit.jupiter.api.Test;
 
 class DifferTestJson {
     @Test
     void jsonTestTake() throws Exception {
-        File file1 = new File("./src/test/resources/file1.json");
-        File file2 = new File("./src/test/resources/file2.json");
+        String file1 = "./src/test/resources/file1.json";
+        String file2 = "./src/test/resources/file2.json";
         String[] expected = {
             "{",
             "  Removed: {\n    key1: value1\n    numbers3: [3, 4, 5]",
@@ -30,8 +28,8 @@ class DifferTestJson {
     }
     @Test
     void ymlTestTake() throws Exception {
-        File file1 = new File("./src/test/resources/file5.yml");
-        File file2 = new File("./src/test/resources/file6.yml");
+        String file1 = "./src/test/resources/file5.yml";
+        String file2 = "./src/test/resources/file6.yml";
         String[] expected = {
             "{",
             "  Removed: {\n    key1: value1\n    numbers3: [3, 4, 5]",

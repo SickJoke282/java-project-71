@@ -3,17 +3,17 @@ package hexlet.code;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Map;
 
 
 public class Differ {
-    public static String generate(File file1, File file2) throws IOException {
+    public static String generate(String file1, String file2) throws IOException {
         return generate(file1, file2, "stylish");
     }
-    public static String generate(File file1, File file2, String formatter) throws IOException {
-        Map<String, Object>[] parsedFiles = Parser.parse(file1, file2);
+    public static String generate(String file1, String file2, String formatter) throws IOException {
+        Map<String, Object>[] parsedFiles = Parser.parse(Path.of(file1).toFile(), Path.of(file2).toFile());
         Map<String, Object> container1 = parsedFiles[0];
         Map<String, Object> container2 = parsedFiles[1];
         Multimap<String, Map.Entry<String, Object>> mapWithChanges = trackChangesOfFiles(container1, container2);
