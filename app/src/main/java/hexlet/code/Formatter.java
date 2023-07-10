@@ -93,7 +93,7 @@ public class Formatter {
                 result = result.concat(temp + "\n    },\n");
             }
         }
-        result += result.substring(0, result.length() - 2).concat("\n  }\n}");
+        result = result.substring(0, result.length() - 2).concat("\n  }\n}");
         return result;
     }
     public static Object giveComplexValueOrCasual(Map.Entry<Map.Entry<String, Object>, String> entriesOfMap) {
