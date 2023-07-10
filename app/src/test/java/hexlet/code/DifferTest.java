@@ -37,7 +37,7 @@ class DifferTest {
             "+ setting3: none",
             "}"
             };
-        assertThat(Differ.generate(file1, file2, "stylish")).contains(expected);
+        assertThat(Differ.generate(file1, file2)).contains(expected);
     }
 
     @Test
