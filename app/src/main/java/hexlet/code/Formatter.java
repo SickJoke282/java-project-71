@@ -33,7 +33,9 @@ public class Formatter {
         for (Map.Entry<Map.Entry<String, Object>, String> entriesOfMap: multimap.entrySet()) {
             Object temp = (entriesOfMap.getKey().getValue().getClass() == LinkedHashMap.class
                     || entriesOfMap.getKey().getValue().getClass() == ArrayList.class)
-                    ? "[complex value]" : entriesOfMap.getKey().getValue();
+                    ? "[complex value]" : (entriesOfMap.getKey().getValue().getClass() == String.class
+                            && !entriesOfMap.getKey().getValue().equals("null"))
+                    ? "'" + entriesOfMap.getKey().getValue() + "'" : entriesOfMap.getKey().getValue();
             if (entriesOfMap.getValue().equals("    ")) {
                 continue;
             }
