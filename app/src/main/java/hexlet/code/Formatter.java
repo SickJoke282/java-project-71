@@ -54,7 +54,7 @@ public class Formatter {
                 result = result.concat(temp + "\n");
             }
         }
-        return result;
+        return result.substring(0, result.length() - 1);
     }
     public static String jsonGenerate(Map<Map.Entry<String, Object>, String> multimap) {
         String result = "{\n  Removed: {\n";
