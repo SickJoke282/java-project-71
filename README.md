@@ -11,3 +11,5 @@
 [![asciicast](https://asciinema.org/a/AJfP43EZYKrN0DV9i6mr6LBVz.svg)](https://asciinema.org/a/AJfP43EZYKrN0DV9i6mr6LBVz)
 ### Add a new format - plain:
 [![asciicast](https://asciinema.org/a/OB2lmqNR2j4dTU1Vl8o7sNzk3.svg)](https://asciinema.org/a/OB2lmqNR2j4dTU1Vl8o7sNzk3)
+### A new format - json:
+[![asciicast](https://asciinema.org/a/qBDBlIEo7O6HwOiDbGvFMcy9I.svg)](https://asciinema.org/a/qBDBlIEo7O6HwOiDbGvFMcy9I)
