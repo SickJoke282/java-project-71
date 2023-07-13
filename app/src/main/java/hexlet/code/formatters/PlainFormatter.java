@@ -1,5 +1,7 @@
 package hexlet.code.formatters;
 
+import hexlet.code.Formatter;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,9 +12,7 @@ public class PlainFormatter {
     public static String plainGenerate(List<Map<String, Object>> maps) {
         String result = "";
         for (Map<String, Object> map: maps) {
-            String key = map.keySet().stream()
-                    .filter(x -> !x.equals("type") && !x.equals("value2"))
-                    .collect(Collectors.joining());
+            String key = Formatter.giveKey(map);
             Object adaptiveValueToRead1 = giveAdaptiveOutput(map, key);
             Object adaptiveValueToRead2 = null;
             if (map.containsKey("value2")) {

@@ -3,6 +3,7 @@ package hexlet.code.formatters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import hexlet.code.Formatter;
 
 import java.util.List;
 import java.util.LinkedHashMap;
@@ -20,9 +21,7 @@ public class JsonFormatter {
         Map<String, Object> changed = new LinkedHashMap<>();
         String result = "";
         for (Map<String, Object> map: maps) {
-            String key = map.keySet().stream()
-                    .filter(x -> !x.equals("type") && !x.equals("value2"))
-                    .collect(Collectors.joining());
+            String key = Formatter.giveKey(map);
             switch (map.get("type").toString()) {
                 case "added" -> {
                     added.putAll(map);
