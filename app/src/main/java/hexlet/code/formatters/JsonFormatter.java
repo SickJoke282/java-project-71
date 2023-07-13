@@ -23,18 +23,23 @@ public class JsonFormatter {
             String s = map.keySet().stream()
                     .filter(x -> !x.equals("type") && !x.equals("value2"))
                     .collect(Collectors.joining());
-            if (map.get("type").equals("added")) {
-                added.putAll(map);
-                added.remove("type");
-            } else if (map.get("type").equals("removed")) {
-                removed.putAll(map);
-                removed.remove("type");
-            } else if (map.get("type").equals("unchanged")) {
-                unchanged.putAll(map);
-                unchanged.remove("type");
-            } else {
-                changed.put(s, Map.of("from", map.get(s), "to", map.get("value2")));
-                changed.remove("type");
+            switch (map.get("type").toString()) {
+                case "added" -> {
+                    added.putAll(map);
+                    added.remove("type");
+                }
+                case "removed" -> {
+                    removed.putAll(map);
+                    removed.remove("type");
+                }
+                case "unchanged" -> {
+                    unchanged.putAll(map);
+                    unchanged.remove("type");
+                }
+                default -> {
+                    changed.put(s, Map.of("from", map.get(s), "to", map.get("value2")));
+                    changed.remove("type");
+                }
             }
             newMap.put("added", added);
             newMap.put("removed", removed);

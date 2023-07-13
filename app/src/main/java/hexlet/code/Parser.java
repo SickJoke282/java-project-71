@@ -14,14 +14,19 @@ public class Parser {
             String extension
     ) throws IOException {
         Map<String, Object>[] parsedFiles = new HashMap[2];
-        if (extension.equals(".json")) {
-            ObjectMapper jsonObjectMapper = new ObjectMapper();
-            parsedFiles[0] = jsonObjectMapper.readValue(file1, HashMap.class);
-            parsedFiles[1] = jsonObjectMapper.readValue(file2, HashMap.class);
-        } else if (extension.equals(".yml")) {
-            ObjectMapper ymlObjectMapper = new YAMLMapper();
-            parsedFiles[0] = ymlObjectMapper.readValue(file1, HashMap.class);
-            parsedFiles[1] = ymlObjectMapper.readValue(file2, HashMap.class);
+        ObjectMapper jsonObjectMapper = new ObjectMapper();
+        ObjectMapper ymlObjectMapper = new YAMLMapper();
+        switch (extension) {
+            case ".json" :
+                parsedFiles[0] = jsonObjectMapper.readValue(file1, HashMap.class);
+                parsedFiles[1] = jsonObjectMapper.readValue(file2, HashMap.class);
+                break;
+            case ".yml":
+                parsedFiles[0] = ymlObjectMapper.readValue(file1, HashMap.class);
+                parsedFiles[1] = ymlObjectMapper.readValue(file2, HashMap.class);
+                break;
+            default:
+                parsedFiles = null;
         }
         return parsedFiles;
     }
