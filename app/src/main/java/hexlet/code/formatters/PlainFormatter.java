@@ -18,14 +18,19 @@ public class PlainFormatter {
             if (map.containsKey("value2")) {
                 adaptiveValueToRead2 = giveAdaptiveOutput(map, "value2");
             }
-            if (map.get("type").equals("removed")) {
-                result = result.concat("Property '" + key + "' was removed\n");
-            } else if (map.get("type").equals("added")) {
-                result = result.concat("Property '" + key + "' was added with value: "
+            switch (map.get("type").toString()) {
+                case "removed":
+                    result = result.concat("Property '" + key + "' was removed\n");
+                    break;
+                case "added":
+                    result = result.concat("Property '" + key + "' was added with value: "
                         + adaptiveValueToRead1 + "\n");
-            } else if (map.get("type").equals("changed")) {
-                result = result.concat("Property '" + key + "' was updated. From "
+                    break;
+                case "changed":
+                    result = result.concat("Property '" + key + "' was updated. From "
                         + adaptiveValueToRead1 + " to " + adaptiveValueToRead2 + "\n");
+                    break;
+                default: result = result.concat("");
             }
         }
         return result.substring(0, result.lastIndexOf('\n'));

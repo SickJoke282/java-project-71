@@ -20,7 +20,7 @@ public class JsonFormatter {
         Map<String, Object> changed = new LinkedHashMap<>();
         String result = "";
         for (Map<String, Object> map: maps) {
-            String s = map.keySet().stream()
+            String key = map.keySet().stream()
                     .filter(x -> !x.equals("type") && !x.equals("value2"))
                     .collect(Collectors.joining());
             switch (map.get("type").toString()) {
@@ -37,7 +37,7 @@ public class JsonFormatter {
                     unchanged.remove("type");
                 }
                 default -> {
-                    changed.put(s, Map.of("from", map.get(s), "to", map.get("value2")));
+                    changed.put(key, Map.of("from", map.get(key), "to", map.get("value2")));
                     changed.remove("type");
                 }
             }
