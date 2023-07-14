@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 class DifferTestJson {
-    String[] expected;
+    private String[] expected;
     @BeforeEach
     public void init() throws IOException {
         String expectedFile = "./src/test/resources/expectedFile.json";
