@@ -4,30 +4,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Parser {
-    public static Map<String, Object>[] parse(
-            String file1,
-            String file2,
+    public static Map<String, Object> parse(
+            String contentOfFile,
             String extension
     ) throws IOException {
-        Map<String, Object>[] parsedFiles = new HashMap[2];
         ObjectMapper jsonObjectMapper = new ObjectMapper();
         ObjectMapper ymlObjectMapper = new YAMLMapper();
-        switch (extension) {
-            case ".json" :
-                parsedFiles[0] = jsonObjectMapper.readValue(file1, HashMap.class);
-                parsedFiles[1] = jsonObjectMapper.readValue(file2, HashMap.class);
-                break;
-            case ".yml":
-                parsedFiles[0] = ymlObjectMapper.readValue(file1, HashMap.class);
-                parsedFiles[1] = ymlObjectMapper.readValue(file2, HashMap.class);
-                break;
-            default:
-                parsedFiles = null;
-        }
-        return parsedFiles;
+        return switch (extension) {
+            case ".json" -> jsonObjectMapper.readValue(contentOfFile, Map.class);
+            case ".yml" -> ymlObjectMapper.readValue(contentOfFile, Map.class);
+            default -> null;
+        };
     }
 }

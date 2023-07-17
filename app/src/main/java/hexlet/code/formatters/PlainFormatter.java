@@ -1,23 +1,22 @@
 package hexlet.code.formatters;
 
-import hexlet.code.Formatter;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PlainFormatter {
-    public static String plainGenerate(List<Map<String, Object>> maps) {
+    public static String plainGenerate(List<Map<String, Object>> mapsOfContent) {
         String result = "";
-        for (Map<String, Object> map: maps) {
-            String key = Formatter.giveKey(map);
-            Object adaptiveValueToRead1 = giveAdaptiveOutput(map, key);
+        for (Map<String, Object> content: mapsOfContent) {
+            Object key = content.get("key");
+            key = key.toString();
+            Object adaptiveValueToRead1 = giveAdaptiveOutput(content.get(key));
             Object adaptiveValueToRead2 = null;
-            if (map.containsKey("value2")) {
-                adaptiveValueToRead2 = giveAdaptiveOutput(map, "value2");
+            if (content.containsKey("value2")) {
+                adaptiveValueToRead2 = giveAdaptiveOutput(content.get("value2"));
             }
-            switch (map.get("type").toString()) {
+            switch (content.get("type").toString()) {
                 case "removed":
                     result = result.concat("Property '" + key + "' was removed\n");
                     break;
@@ -34,11 +33,13 @@ public class PlainFormatter {
         }
         return result.substring(0, result.lastIndexOf('\n'));
     }
-    public static Object giveAdaptiveOutput(Map<String, Object> map, String key) {
-        return (map.get(key).getClass() == LinkedHashMap.class
-                || map.get(key).getClass() == ArrayList.class)
-                ? "[complex value]" : (map.get(key).getClass() == String.class
-                && !map.get(key).equals("null"))
-                ? "'" + map.get(key) + "'" : map.get(key);
+    public static Object giveAdaptiveOutput(Object value) {
+        if (value.getClass() == LinkedHashMap.class || value.getClass() == ArrayList.class) {
+            return "[complex value]";
+        } else if (value.getClass() == String.class && !value.equals("null")) {
+            return "'" + value + "'";
+        } else {
+            return value;
+        }
     }
 }

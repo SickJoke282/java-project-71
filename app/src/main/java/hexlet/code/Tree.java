@@ -20,18 +20,21 @@ public class Tree {
             if (!container2.containsKey(key)) {
                 Map<String, Object> node = Map.of(
                         "type", "removed",
+                        "key", key,
                         key, val1
                 );
                 answer.add(node);
             } else if (!container1.containsKey(key)) {
                 Map<String, Object> node = Map.of(
                         "type", "added",
+                        "key", key,
                         key, val2
                 );
                 answer.add(node);
             } else if (!val1.equals(val2)) {
                 Map<String, Object> node = Map.of(
                         "type", "changed",
+                        "key", key,
                         key, val1,
                         "value2", val2
                 );
@@ -39,6 +42,7 @@ public class Tree {
             } else {
                 Map<String, Object> node = Map.of(
                         "type", "unchanged",
+                        "key", key,
                         key, val1
                 );
                 answer.add(node);

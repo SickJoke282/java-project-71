@@ -16,9 +16,8 @@ public class Differ {
         String contentOfFile1 = Files.readString(Paths.get(file1));
         String contentOfFile2 = Files.readString(Paths.get(file2));
         String extension = file1.substring(file1.lastIndexOf('.'));
-        Map<String, Object>[] parsedFiles = Parser.parse(contentOfFile1, contentOfFile2, extension);
-        Map<String, Object> container1 = parsedFiles[0];
-        Map<String, Object> container2 = parsedFiles[1];
+        Map<String, Object> container1 = Parser.parse(contentOfFile1, extension);
+        Map<String, Object> container2 = Parser.parse(contentOfFile2, extension);
         List<Map<String, Object>> mapWithChanges = Tree.trackChangesOfFiles(container1, container2);
         return Formatter.defineAFormatter(mapWithChanges, formatter);
     }

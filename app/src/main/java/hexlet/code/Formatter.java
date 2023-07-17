@@ -7,7 +7,6 @@ import hexlet.code.formatters.StylishFormatter;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Formatter {
     public static String defineAFormatter(List<Map<String, Object>> mapWithChanges, String formatter)
@@ -18,10 +17,5 @@ public class Formatter {
             case "json" -> JsonFormatter.jsonGenerate(mapWithChanges);
             default -> null;
         };
-    }
-    public static String giveKey(Map<String, Object> map) {
-        return map.keySet().stream()
-                .filter(x -> !x.equals("type") && !x.equals("value2"))
-                .collect(Collectors.joining());
     }
 }
