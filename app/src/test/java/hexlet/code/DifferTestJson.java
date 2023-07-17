@@ -2,7 +2,7 @@ package hexlet.code;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -10,10 +10,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 class DifferTestJson {
-    private String[] expected;
-    @BeforeEach
-    public void init() throws IOException {
-        String expectedFile = "./src/test/resources/expectedFile.json";
+    private static String[] expected;
+    @BeforeAll
+    public static void init() throws IOException {
+        String expectedFile = "./src/test/resources/expectedFileJson.json";
         expected = Files.readString(Paths.get(expectedFile))
                 .replace(",", "")
                 .split("\n");
@@ -25,7 +25,7 @@ class DifferTestJson {
         assertThat(Differ.generate(file1, file2, "json")
                 .replace(",", "")
                 .split("\n"))
-                .contains(expected);
+                .containsExactlyInAnyOrder(expected);
     }
     @Test
     void ymlTestTake() throws Exception {
@@ -34,6 +34,6 @@ class DifferTestJson {
         assertThat(Differ.generate(file1, file2, "json")
                 .replace(",", "")
                 .split("\n"))
-                .contains(expected);
+                .containsExactlyInAnyOrder(expected);
     }
 }
