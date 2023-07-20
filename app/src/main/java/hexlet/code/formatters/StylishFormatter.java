@@ -8,20 +8,20 @@ public class StylishFormatter {
         String result = "{\n";
         for (Map<String, Object> content: mapsOfContent) {
             Object key = content.get("key");
-            key = key.toString();
+            Object value = content.get("value");
             switch (content.get("type").toString()) {
                 case "removed":
-                    result = result.concat("  - " + key + ": " +  content.get(key) + "\n");
+                    result = result.concat("  - " + key + ": " +  value + "\n");
                     break;
                 case "added":
-                    result = result.concat("  + " + key + ": " +  content.get(key) + "\n");
+                    result = result.concat("  + " + key + ": " +  value + "\n");
                     break;
                 case "changed":
-                    result = result.concat("  - " + key + ": " + content.get(key) + "\n");
+                    result = result.concat("  - " + key + ": " + value + "\n");
                     result = result.concat("  + " + key + ": " + content.get("value2") + "\n");
                     break;
                 default:
-                    result = result.concat("    " + key + ": " +  content.get(key) + "\n");
+                    result = result.concat("    " + key + ": " +  value + "\n");
             }
         }
         result = result.concat("}");

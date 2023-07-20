@@ -10,8 +10,7 @@ public class PlainFormatter {
         String result = "";
         for (Map<String, Object> content: mapsOfContent) {
             Object key = content.get("key");
-            key = key.toString();
-            Object adaptiveValueToRead1 = giveAdaptiveOutput(content.get(key));
+            Object adaptiveValueToRead1 = giveAdaptiveOutput(content.get("value"));
             Object adaptiveValueToRead2 = null;
             if (content.containsKey("value2")) {
                 adaptiveValueToRead2 = giveAdaptiveOutput(content.get("value2"));

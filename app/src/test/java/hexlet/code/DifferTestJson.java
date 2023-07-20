@@ -10,30 +10,24 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 class DifferTestJson {
-    private static String[] expected;
+    private static String expected;
     @BeforeAll
     public static void init() throws IOException {
         String expectedFile = "./src/test/resources/expectedFileJson.json";
-        expected = Files.readString(Paths.get(expectedFile))
-                .replace(",", "")
-                .split("\n");
+        expected = Files.readString(Paths.get(expectedFile));
     }
     @Test
     void jsonTestTake() throws Exception {
         String file1 = "./src/test/resources/file1.json";
         String file2 = "./src/test/resources/file2.json";
-        assertThat(Differ.generate(file1, file2, "json")
-                .replace(",", "")
-                .split("\n"))
-                .containsExactlyInAnyOrder(expected);
+        assertThat(Differ.generate(file1, file2, "json"))
+                .isEqualTo(expected);
     }
     @Test
     void ymlTestTake() throws Exception {
         String file1 = "./src/test/resources/file5.yml";
         String file2 = "./src/test/resources/file6.yml";
-        assertThat(Differ.generate(file1, file2, "json")
-                .replace(",", "")
-                .split("\n"))
-                .containsExactlyInAnyOrder(expected);
+        assertThat(Differ.generate(file1, file2, "json"))
+                .isEqualTo(expected);
     }
 }

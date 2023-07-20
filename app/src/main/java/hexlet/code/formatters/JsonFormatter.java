@@ -11,6 +11,7 @@ public class JsonFormatter {
     public static String jsonGenerate(List<Map<String, Object>> mapsOfContent) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+        objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
         return objectMapper.writeValueAsString(mapsOfContent);
     }
 }
